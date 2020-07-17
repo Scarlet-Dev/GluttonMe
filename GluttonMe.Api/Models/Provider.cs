@@ -49,15 +49,17 @@ namespace GluttonMe.Api.Models
 
         public string State { get; set; }
 
-        public string zip { get; set; }
+        public string Zip { get; set; }
     }
 
     public enum MenuItemType
     {
         Vegetarian = 0,
-        Chinese,
-        American,
-        Pizza
+        Soup,
+        Salad,
+        Appetizers,
+
+
     }
 
     public enum Days
