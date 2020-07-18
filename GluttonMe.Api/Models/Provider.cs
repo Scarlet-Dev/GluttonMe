@@ -28,6 +28,17 @@ namespace GluttonMe.Api.Models
 
     public struct Menu
     {
+        public Menu(int id, string name, MenuItemType menuItem,
+            string description, decimal price, string path)
+        {
+            ItemId = id;
+            ItemName = name;
+            ItemType = menuItem;
+            ItemDescription = description;
+            ItemPrice = price;
+            ItemImagePath = path;
+        }
+
         public int ItemId { get; set; }
 
         public string ItemName { get; set; }
@@ -43,7 +54,19 @@ namespace GluttonMe.Api.Models
 
     public struct Address
     {
-        public string Street { get; set; }
+        public Address(string street1, string street2, 
+            string city, string state, string zip)
+        {
+            Street1 = street1;
+            Street2 = street2;
+            City = city;
+            State = state;
+            Zip = zip;
+        }
+
+        public string Street1 { get; set; }
+
+        public string Street2 { get; set; }
 
         public string City { get; set; }
 
@@ -57,8 +80,15 @@ namespace GluttonMe.Api.Models
         Vegetarian = 0,
         Soup,
         Salad,
+        Chicken,
+        Fish,
+        Beef,
+        Dairy,
+        Nuts,
+        Gluten_Free,
         Appetizers,
-
+        Entree,
+        Desert
 
     }
 
@@ -69,6 +99,7 @@ namespace GluttonMe.Api.Models
         Wednesday,
         Thursday,
         Friday,
-        Saturday
+        Saturday,
+        Sunday
     }
 }
