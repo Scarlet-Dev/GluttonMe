@@ -1,4 +1,6 @@
-﻿using System;
+﻿using MongoDB.Bson;
+using MongoDB.Bson.Serialization.Attributes;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -7,7 +9,11 @@ namespace GluttonMe.Api.Models
 {
     public class Provider
     {
-        public Address Address { get; set; }
+        [BsonId]
+        [BsonRepresentation(BsonType.Int32)]
+        public int ProviderId { get; set; }
+
+        public Address[] Address { get; set; }
 
         public Menu Menu { get; set; }
 
