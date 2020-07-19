@@ -7,14 +7,16 @@ namespace GluttonMe.Api.Interfaces
 {
     public interface IRepositoryBase<F>
     {
-        public Task<F> get();
+        public List<F> Get();
 
-        public Task<F> get(int id);
+        public List<F> Get(int id);
 
-        public Task<F> create(F model);
+        public F Create(F model);
 
-        public Task<F> update(int id, F model);
+        public void Update(int id, F model);
 
-        public Task<F> delete(int id);
+        public void Remove(F model);
+
+        public void Remove(int id);
     }
 }
