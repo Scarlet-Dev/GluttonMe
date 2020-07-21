@@ -2,6 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using GluttonMe.Api.Interfaces;
+using GluttonMe.Api.Models;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -10,6 +12,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 
 namespace GluttonMe.Api
 {
@@ -25,6 +28,14 @@ namespace GluttonMe.Api
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.Configure<GluttonMeDatabaseSettings>(Configuration.GetSection(nameof(GluttonMeDatabaseSettings)));
+
+            services.AddSingleton<IGluttonMeDatabaseSettings>(sp => 
+            sp.GetRequiredService<IOptions<GluttonMeDatabaseSettings>>().Value);
+
+            //TODO - New to add DatabaseInit Service and use DatabaseSettings properly
+            services.AddSingleton<GluttonMeDatabaseInitializer>();
+            
             services.AddControllers();
         }
 
