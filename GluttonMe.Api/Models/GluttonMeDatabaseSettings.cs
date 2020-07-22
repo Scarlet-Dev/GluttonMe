@@ -8,12 +8,21 @@ namespace GluttonMe.Api.Models
 {
     public class GluttonMeDatabaseSettings : IGluttonMeDatabaseSettings
     {
+        public string DatabaseName { get; }
+        public string ConnectionString { get;}
+        public string[] CollectionNames { get; }
+
         public GluttonMeDatabaseSettings()
         {
         }
 
-        public string DatabaseName { get; set; }
-        public string ConnectionString { get; set; }
-        public string[] CollectionNames { get; set; }
+        public GluttonMeDatabaseSettings(string databaseName, string connectionName, string[] collectionNames)
+        {
+            DatabaseName = databaseName;
+            ConnectionString = connectionName;
+            CollectionNames = collectionNames;
+        }
+
+        
     }
 }

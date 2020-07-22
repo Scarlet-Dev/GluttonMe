@@ -7,8 +7,8 @@ namespace GluttonMe.Api.Interfaces
 {
     public interface IGluttonMeDatabaseSettings
     {
-        string DatabaseName { get; set; }
-        string[] CollectionNames { get; set; }
-        string ConnectionString { get; set; }
+        string DatabaseName { get; }
+        string[] CollectionNames { get; }
+        string ConnectionString { get; }
     }
 }
