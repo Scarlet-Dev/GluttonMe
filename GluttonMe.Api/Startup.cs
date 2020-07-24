@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using GluttonMe.Api.Interfaces;
 using GluttonMe.Api.Models;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Cors.Infrastructure;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
@@ -28,6 +29,10 @@ namespace GluttonMe.Api
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddHttpsRedirection(serv => serv.HttpsPort = 3001);
+
+            services.AddCors(cfg => cfg.AddPolicy("", new CorsPolicy()));
+            
             services.Configure<GluttonMeDatabaseSettings>(Configuration.GetSection(nameof(GluttonMeDatabaseSettings)));
 
             services.AddSingleton<IGluttonMeDatabaseSettings>(sp => 
@@ -35,6 +40,7 @@ namespace GluttonMe.Api
 
             //TODO - New to add DatabaseInit Service and use DatabaseSettings properly
             services.AddSingleton<GluttonMeDatabaseInitializer>();
+
             
             services.AddControllers();
         }
@@ -45,14 +51,28 @@ namespace GluttonMe.Api
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
+
+                app.UseCors(cfg =>
+                {
+                    cfg.AllowAnyOrigin()
+                    .AllowAnyHeader()
+                    .AllowAnyMethod();
+                });
             }
+            else
+            {
+                app.UseCors(cfg =>
+                {
+                    cfg.WithOrigins("")
+                    .AllowAnyMethod();
+                });
+                app.UseHttpsRedirection();
 
-            app.UseHttpsRedirection();
+                app.UseRouting();
 
-            app.UseRouting();
+                app.UseAuthorization();
 
-            app.UseAuthorization();
-
+            }
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
